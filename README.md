@@ -9,3 +9,11 @@ Get the source code:
 Navigate to project directory:
 
     cd docker-project
+
+Start the project:
+
+    docker-compose up
+
+Navigate your browser to:
+
+    localhost:8000
