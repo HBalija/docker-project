@@ -4,7 +4,7 @@
 
 Get the source code:
 
-    git clone git@github.com:HBalija/docker-project.git
+    git clone git@github.com:HBalija/multi-docker.git
 
 Navigate to project directory:
 

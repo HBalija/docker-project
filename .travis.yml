@@ -1,0 +1,28 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  # setup React testing using Dockerfile.dev image
+  - docker build -t hbalija/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  # run test and exit script
+  - docker run -e CI=true hbalija/react-test yarn test
+
+after_success:
+  # build production images
+  - docker build -t hbalija/multi-client ./client
+  - docker build -t hbalija/multi-server ./server
+  - docker build -t hbalija/multi-worker ./worker
+  - docker build -t hbalija/multi-nginx ./nginx
+
+  # Login in to docker CLI (env set on Travis CI)
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # push images to DockerHub
+  - docker push hbalija/multi-client
+  - docker push hbalija/multi-server
+  - docker push hbalija/multi-worker
+  - docker push hbalija/multi-nginx
